@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('partials/head') %>
+</head>
+<body>
+  <%- include('partials/public-nav') %>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="tagline">Your Knowledge, ORGANIZED.</p>
+        <h1>One workspace for everything<br/>you're learning.</h1>
+        <p class="hero-sub">
+          StudySelf AI is an intelligent personal knowledge workspace. Organize study
+          material into Books and Topics, chat with an AI tutor inside each one, then
+          quiz yourself, find your weak spots, and revise exactly what matters —
+          instead of scrolling through scattered chats and PDFs before an exam.
+        </p>
+        <div class="hero-actions">
+          <a href="/register" class="btn btn-primary btn-lg">Create your workspace</a>
+          <a href="/login" class="btn btn-outline btn-lg">I have an account</a>
+        </div>
+        <p class="hero-note">An Intelligent Personal Knowledge Workspace</p>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="mock-book">
+          <div class="mock-book-head">
+            <span class="mock-folder">▤</span>
+            <div>
+              <div class="mock-book-title">Artificial Intelligence</div>
+              <div class="mock-book-meta">Book · Created 2026</div>
+            </div>
+          </div>
+          <ul class="mock-topics">
+            <li><span>Machine Learning</span><em>Strong</em></li>
+            <li><span>Neural Networks</span><em class="warn">Revise</em></li>
+            <li><span>NLP</span><em>Strong</em></li>
+            <li><span>Computer Vision</span><em class="warn">Revise</em></li>
+          </ul>
+        </div>
+        <div class="mock-quiz">
+          <div class="mock-quiz-row"><span>Quiz score</span><strong>82%</strong></div>
+          <div class="mock-bar"><span style="width:82%"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="intro-band">
+      <p>
+        Most students end up with AI answers in one place, PDFs in another, and notes
+        somewhere else entirely. StudySelf AI keeps the conversation, the source
+        material, and the revision plan for every topic together — inside the same Book.
+      </p>
+    </section>
+
+    <section class="features" id="features">
+      <h2>Everything a topic needs, in one place</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>Books &amp; Topics</h3>
+          <p>Organize study material like folders — a Book per subject, Topics inside it, sorted and easy to find again.</p>
+        </div>
+        <div class="feature-card">
+          <h3>AI Chat, in context</h3>
+          <p>Ask questions inside a Topic. The AI stays focused on what you're studying and keeps the history for later.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Show Subheadings</h3>
+          <p>Turn a long conversation into a quick outline — Introduction, Definition, Types, Examples — for fast revision.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Quizzes that know you</h3>
+          <p>Generate quizzes from your own content, then get a weakness breakdown instead of just a score.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Revision Queue</h3>
+          <p>Weak topics are prioritized automatically — High, Medium, Low — so you know what to study next.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Flashcards &amp; Study Map</h3>
+          <p>Flip through AI-generated flashcards and see how your topics connect in a visual map.</p>
+        </div>
+        <div class="feature-card">
+          <h3>PDF → Book</h3>
+          <p>Upload a PDF and StudySelf AI extracts the text and organizes it into Topics automatically.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Progress Dashboard</h3>
+          <p>Real numbers from your own activity — books, topics, quiz scores, and revision progress over time.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="how-it-works" id="how-it-works">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <span class="step-index">1</span>
+          <h4>Create a Book</h4>
+          <p>Start a Book for a subject, or upload a PDF and let StudySelf AI build one for you.</p>
+        </div>
+        <div class="step">
+          <span class="step-index">2</span>
+          <h4>Add Topics &amp; chat</h4>
+          <p>Break the Book into Topics and ask the AI tutor to explain, simplify, or summarize each one.</p>
+        </div>
+        <div class="step">
+          <span class="step-index">3</span>
+          <h4>Quiz yourself</h4>
+          <p>Take a quiz on one Topic or the whole Book, and see exactly which concepts need more work.</p>
+        </div>
+        <div class="step">
+          <span class="step-index">4</span>
+          <h4>Revise what's weak</h4>
+          <p>Your Revision Queue prioritizes weak Topics automatically, so exam prep stays focused.</p>
+        </div>
+      </div>
+      <div class="cta-band">
+        <div>
+          <h3>Ready to organize what you're learning?</h3>
+          <p>It only takes a minute to create your first Book.</p>
+        </div>
+        <a href="/register" class="btn btn-primary btn-lg">Get Started Free</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <span class="brand-mark">S</span>
+      <span class="brand-text">StudySelf <em>AI</em></span>
+    </div>
+    <p>An Intelligent Personal Knowledge Workspace — Your Knowledge, ORGANIZED.</p>
+    <p class="footer-fine">A student mini project built with Node.js, Express, EJS, and MySQL.</p>
+  </footer>
+</body>
+</html>

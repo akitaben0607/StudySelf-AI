@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main">
+    <%- include('../partials/flash') %>
+    <div class="page-head"><div><h1>Revision Queue</h1><p class="page-sub">Weak topics, prioritized automatically from your quiz performance.</p></div></div>
+
+    <% if (isEmpty) { %>
+      <div class="empty-state empty-state-positive">
+        <h3>You're all caught up.</h3>
+        <p>No topics need revision right now. Take a quiz to keep this queue up to date.</p>
+        <a href="/dashboard" class="btn btn-primary">Go to Books</a>
+      </div>
+    <% } else { %>
+      <% ['high','medium','low'].forEach(function(level) { %>
+        <% if (grouped[level].length) { %>
+          <div class="section-head"><h2 class="priority-heading priority-<%= level %>"><%= level.charAt(0).toUpperCase() + level.slice(1) %> Priority</h2></div>
+          <div class="revision-list">
+            <% grouped[level].forEach(function(item) { %>
+              <div class="revision-row">
+                <div>
+                  <strong><%= item.topic_title %></strong>
+                  <span class="muted">· <%= item.book_title %></span>
+                  <p class="revision-reason"><%= item.reason %></p>
+                </div>
+                <div class="revision-actions">
+                  <a href="/topics/<%= item.topic_id %>" class="btn btn-outline btn-sm">Open Topic</a>
+                  <form action="/revision/<%= item.id %>/revised" method="POST">
+                    <button type="submit" class="btn btn-primary btn-sm">Mark as Revised</button>
+                  </form>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+        <% } %>
+      <% }) %>
+    <% } %>
+
+    <% if (revisedRecently.length) { %>
+      <div class="section-head"><h2>Recently revised</h2></div>
+      <div class="revision-list revision-list-muted">
+        <% revisedRecently.forEach(function(item) { %>
+          <div class="revision-row">
+            <div><strong><%= item.topic_title %></strong> <span class="muted">· <%= item.book_title %></span></div>
+            <span class="pill pill-success">Revised</span>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main app-main-narrow">
+    <%- include('../partials/flash') %>
+
+    <div class="quiz-progress-head">
+      <div class="quiz-progress-bar"><span id="quiz-progress-fill" style="width: <%= 100 / questions.length %>%"></span></div>
+      <span class="quiz-progress-label" id="quiz-progress-label">Question 1 of <%= questions.length %></span>
+    </div>
+
+    <form action="/quiz/<%= quiz.id %>/submit" method="POST" id="quiz-form">
+      <% questions.forEach(function(q, i) { %>
+        <div class="quiz-question" data-index="<%= i %>" style="<%= i === 0 ? '' : 'display:none' %>">
+          <h2><%= q.question %></h2>
+          <div class="quiz-options">
+            <% ['A','B','C','D'].forEach(function(letter) { %>
+              <label class="quiz-option">
+                <input type="radio" name="answers[<%= q.id %>]" value="<%= letter %>" required />
+                <span class="quiz-option-letter"><%= letter %></span>
+                <span class="quiz-option-text"><%= q['option_' + letter.toLowerCase()] %></span>
+              </label>
+            <% }) %>
+          </div>
+        </div>
+      <% }) %>
+
+      <div class="quiz-nav">
+        <button type="button" id="quiz-prev-btn" class="btn btn-outline" disabled>Previous</button>
+        <button type="button" id="quiz-next-btn" class="btn btn-primary">Next</button>
+        <button type="submit" id="quiz-submit-btn" class="btn btn-primary" style="display:none" data-confirm="Submit your answers? You won't be able to change them after this.">Submit Quiz</button>
+      </div>
+    </form>
+  </main>
+</div>
+<script src="/js/app.js"></script>
+<script src="/js/quiz.js"></script>
+</body>
+</html>

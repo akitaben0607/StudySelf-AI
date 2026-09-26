@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main app-main-narrow">
+    <%- include('../partials/flash') %>
+    <div class="breadcrumb"><a href="/dashboard">Books</a> / <a href="/books/<%= book.id %>"><%= book.title %></a> / <span>Take Quiz</span></div>
+    <div class="page-head"><div><h1>Take Quiz</h1><p class="page-sub">Choose what you'd like to be quizzed on.</p></div></div>
+
+    <div class="choice-grid">
+      <a href="/books/<%= book.id %>/quiz/setup?scope=all" class="choice-card">
+        <span class="tool-icon">◎</span>
+        <h3>Quiz for All Topics</h3>
+        <p>Covers every topic in <%= book.title %>.</p>
+      </a>
+      <button class="choice-card" data-open-modal="topic-choice-modal">
+        <span class="tool-icon">▤</span>
+        <h3>Quiz for Specific Topic</h3>
+        <p>Focus on one topic in this book.</p>
+      </button>
+    </div>
+
+    <div class="modal" id="topic-choice-modal">
+      <div class="modal-card">
+        <h3>Choose a Topic</h3>
+        <form action="/books/<%= book.id %>/quiz/setup" method="GET">
+          <input type="hidden" name="scope" value="topic" />
+          <select name="topicId" required>
+            <% topics.forEach(function(t) { %>
+              <option value="<%= t.id %>"><%= t.title %></option>
+            <% }) %>
+          </select>
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" data-close-modal>Cancel</button>
+            <button type="submit" class="btn btn-primary">Continue</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="/js/app.js"></script>
+</body>
+</html>

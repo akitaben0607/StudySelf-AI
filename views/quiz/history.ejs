@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main">
+    <%- include('../partials/flash') %>
+    <div class="page-head"><div><h1>Quiz History</h1><p class="page-sub">Your past attempts, most recent first.</p></div></div>
+
+    <% if (attempts.length === 0) { %>
+      <div class="empty-state">
+        <h3>No quiz attempts yet.</h3>
+        <p>Take a quiz from any Book to see your history here.</p>
+        <a href="/dashboard" class="btn btn-primary">Go to Books</a>
+      </div>
+    <% } else { %>
+      <div class="history-list">
+        <% attempts.forEach(function(a) { %>
+          <a href="/quiz/result/<%= a.id %>" class="history-row">
+            <div>
+              <strong><%= a.book_title %></strong>
+              <span class="muted"><%= a.topic_title ? '· ' + a.topic_title : '· All Topics' %></span>
+            </div>
+            <span class="pill <%= a.percentage >= 75 ? 'pill-success' : (a.percentage >= 50 ? '' : 'pill-warn') %>"><%= a.percentage %>%</span>
+          </a>
+        <% }) %>
+      </div>
+    <% } %>
+  </main>
+</div>
+</body>
+</html>

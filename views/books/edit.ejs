@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main app-main-narrow">
+    <%- include('../partials/flash') %>
+    <div class="page-head"><h1>Edit Book</h1></div>
+    <form action="/books/<%= book.id %>/edit" method="POST" class="card-form">
+      <label>Book title
+        <input type="text" name="title" value="<%= book.title %>" required autofocus />
+      </label>
+      <label>Description <span class="optional">(optional)</span>
+        <textarea name="description" rows="3"><%= book.description || '' %></textarea>
+      </label>
+      <div class="form-actions">
+        <a href="/books/<%= book.id %>" class="btn btn-outline">Cancel</a>
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+
+    <div class="danger-zone">
+      <div>
+        <h4>Delete this Book</h4>
+        <p>This permanently removes all of its Topics, chats, quizzes, and flashcards.</p>
+      </div>
+      <form action="/books/<%= book.id %>/delete" method="POST" class="confirm-delete" data-confirm="Delete &quot;<%= book.title %>&quot; and everything inside it? This cannot be undone.">
+        <button type="submit" class="btn btn-danger">Delete Book</button>
+      </form>
+    </div>
+  </main>
+</div>
+</body>
+</html>

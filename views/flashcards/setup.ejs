@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main app-main-narrow">
+    <%- include('../partials/flash') %>
+    <div class="breadcrumb"><a href="/dashboard">Books</a> / <a href="/books/<%= book.id %>"><%= book.title %></a> / <span>Flashcards</span></div>
+    <div class="page-head"><div><h1>Flashcards</h1><p class="page-sub">Generate flashcards from your own study content.</p></div></div>
+
+    <form action="/books/<%= book.id %>/flashcards/generate" method="POST" class="card-form" id="fc-form">
+      <label>Scope
+        <select name="topicId">
+          <option value="">Whole Book — <%= book.title %></option>
+          <% topics.forEach(function(t) { %>
+            <option value="<%= t.id %>"><%= t.title %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>Number of cards
+        <select name="count">
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+        </select>
+      </label>
+      <div class="form-actions">
+        <a href="/books/<%= book.id %>" class="btn btn-outline">Cancel</a>
+        <button type="submit" class="btn btn-primary" id="fc-generate-btn">Generate Flashcards</button>
+      </div>
+    </form>
+
+    <% if (topics.length) { %>
+      <p class="pdf-hint"><a href="/books/<%= book.id %>/flashcards/study">Already have flashcards? Study them →</a></p>
+    <% } %>
+  </main>
+</div>
+<script>
+  document.getElementById('fc-form').addEventListener('submit', function () {
+    var btn = document.getElementById('fc-generate-btn');
+    btn.disabled = true;
+    btn.textContent = 'Generating…';
+  });
+</script>
+</body>
+</html>

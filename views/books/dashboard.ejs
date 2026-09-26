@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main">
+    <%- include('../partials/flash') %>
+
+    <div class="page-head">
+      <div>
+        <h1>Your Books</h1>
+        <p class="page-sub">Everything you're learning, organized in one place.</p>
+      </div>
+      <a href="/books/new" class="btn btn-primary">+ New Book</a>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card"><span class="stat-value"><%= stats.totalBooks %></span><span class="stat-label">Books</span></div>
+      <div class="stat-card"><span class="stat-value"><%= stats.totalTopics %></span><span class="stat-label">Topics</span></div>
+      <div class="stat-card"><span class="stat-value"><%= stats.quizzesCompleted %></span><span class="stat-label">Quizzes Completed</span></div>
+      <div class="stat-card"><span class="stat-value"><%= stats.avgScore %>%</span><span class="stat-label">Avg. Score</span></div>
+      <div class="stat-card"><span class="stat-value"><%= stats.pendingRevision %></span><span class="stat-label">To Revise</span></div>
+    </div>
+
+    <% if (books.length === 0) { %>
+      <div class="empty-state">
+        <h3>Your knowledge space is empty.</h3>
+        <p>Create your first Book to get started, or import one from a PDF.</p>
+        <div class="empty-actions">
+          <a href="/books/new" class="btn btn-primary">+ New Book</a>
+          <a href="/books/pdf-upload" class="btn btn-outline">Upload a PDF</a>
+        </div>
+      </div>
+    <% } else { %>
+      <div class="book-grid">
+        <% books.forEach(function(b) { %>
+          <a href="/books/<%= b.id %>" class="book-folder">
+            <span class="folder-icon-lg">▤</span>
+            <div class="book-folder-title"><%= b.title %></div>
+            <div class="book-folder-meta">Created <%= b.created_year %><% if (b.source === 'pdf') { %> · From PDF<% } %></div>
+          </a>
+        <% }) %>
+      </div>
+      <p class="pdf-hint">Have study material as a PDF? <a href="/books/pdf-upload">Import it as a new Book →</a></p>
+    <% } %>
+  </main>
+</div>
+</body>
+</html>

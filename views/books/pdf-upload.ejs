@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main app-main-narrow">
+    <%- include('../partials/flash') %>
+    <div class="page-head">
+      <div>
+        <h1>PDF → Book</h1>
+        <p class="page-sub">Upload study material and StudySelf AI will extract the text and organize it into a new Book with Topics automatically.</p>
+      </div>
+    </div>
+
+    <form action="/books/pdf-upload" method="POST" enctype="multipart/form-data" class="card-form" id="pdf-form">
+      <label>PDF file <span class="optional">(max 10MB, text-based PDFs work best)</span>
+        <input type="file" name="pdfFile" accept="application/pdf" required />
+      </label>
+      <div class="pdf-flow">
+        <span>Upload PDF</span> → <span>Extract Text</span> → <span>AI Analysis</span> → <span>Create Book &amp; Topics</span>
+      </div>
+      <div class="form-actions">
+        <a href="/dashboard" class="btn btn-outline">Cancel</a>
+        <button type="submit" class="btn btn-primary" id="pdf-submit-btn">Upload &amp; Analyze</button>
+      </div>
+    </form>
+  </main>
+</div>
+<script src="/js/app.js"></script>
+<script>
+  document.getElementById('pdf-form').addEventListener('submit', function () {
+    var btn = document.getElementById('pdf-submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Processing…';
+  });
+</script>
+</body>
+</html>

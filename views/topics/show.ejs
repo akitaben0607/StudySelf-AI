@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main app-main-chat">
+    <%- include('../partials/flash') %>
+
+    <div class="breadcrumb">
+      <a href="/dashboard">Books</a> / <a href="/books/<%= book.id %>"><%= book.title %></a> / <span><%= topic.title %></span>
+    </div>
+
+    <div class="chat-header">
+      <div>
+        <h1><%= topic.title %></h1>
+        <p class="page-sub">Normal Mode · AI Chat<% if (aiDemoMode) { %> · <span class="demo-badge">Demo Mode</span><% } %></p>
+      </div>
+      <div class="chat-header-actions">
+        <button class="btn btn-outline" id="voice-mode-btn" title="Voice Study Mode">🎙 Voice Mode</button>
+        <button class="btn btn-outline" id="subheadings-btn">Show Subheadings</button>
+      </div>
+    </div>
+
+    <div class="chat-window" id="chat-window" data-topic-id="<%= topic.id %>">
+      <% if (messages.length === 0) { %>
+        <div class="chat-empty">
+          <p>Ask anything about <strong><%= topic.title %></strong> — request an explanation, a summary, or a few examples to get started.</p>
+        </div>
+      <% } %>
+      <% messages.forEach(function(m) { %>
+        <div class="chat-msg chat-msg-<%= m.role %>">
+          <span class="chat-msg-role"><%= m.role === 'user' ? 'You' : 'StudySelf AI' %></span>
+          <div class="chat-msg-bubble"><%= m.content %></div>
+        </div>
+      <% }) %>
+    </div>
+
+    <form id="chat-form" class="chat-input-row">
+      <textarea id="chat-input" placeholder="Ask a question about <%= topic.title %>…" rows="1" required></textarea>
+      <button type="submit" id="chat-send-btn" class="btn btn-primary">Send</button>
+    </form>
+  </main>
+</div>
+
+<div class="modal" id="subheadings-modal">
+  <div class="modal-card">
+    <h3>Subheadings — <%= topic.title %></h3>
+    <div id="subheadings-content" class="subheadings-content">
+      <p class="muted">Loading…</p>
+    </div>
+    <div class="form-actions">
+      <button type="button" class="btn btn-outline" data-close-modal>Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="/js/app.js"></script>
+<script src="/js/chat.js"></script>
+<script src="/js/voice.js"></script>
+</body>
+</html>

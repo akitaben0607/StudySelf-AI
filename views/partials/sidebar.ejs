@@ -1,0 +1,54 @@
+<aside class="sidebar">
+  <a href="/dashboard" class="sidebar-brand">
+    <span class="brand-mark">S</span>
+    <span class="brand-text">StudySelf <em>AI</em></span>
+  </a>
+
+  <form action="/search" method="GET" class="sidebar-search">
+    <input type="search" name="q" placeholder="Search books &amp; topics…" value="<%= typeof q !== 'undefined' ? q : '' %>" />
+  </form>
+
+  <nav class="sidebar-nav">
+    <div class="sidebar-section">
+      <div class="sidebar-section-head">
+        <span>Books</span>
+        <a href="/books/new" class="sidebar-add" title="New Book">+</a>
+      </div>
+      <div class="sidebar-books">
+        <% if (typeof sidebarBooks !== 'undefined' && sidebarBooks.length) { %>
+          <% sidebarBooks.slice(0, 8).forEach(function(b) { %>
+            <a href="/books/<%= b.id %>" class="sidebar-book <%= (typeof book !== 'undefined' && book && book.id === b.id) ? 'active' : '' %>">
+              <span class="folder-icon">▤</span><%= b.title %>
+            </a>
+          <% }) %>
+          <% if (sidebarBooks.length > 8) { %>
+            <a href="/dashboard" class="sidebar-more">View all <%= sidebarBooks.length %> books →</a>
+          <% } %>
+        <% } else { %>
+          <a href="/books/new" class="sidebar-empty">Create your first Book</a>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <a href="/quiz/history" class="sidebar-link">Quiz History</a>
+      <a href="/revision" class="sidebar-link">
+        Revision Queue
+        <% if (typeof sidebarPendingRevision !== 'undefined' && sidebarPendingRevision > 0) { %>
+          <span class="pill"><%= sidebarPendingRevision %></span>
+        <% } %>
+      </a>
+      <a href="/progress" class="sidebar-link">Progress Dashboard</a>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <span class="user-avatar"><%= currentUser.name.charAt(0).toUpperCase() %></span>
+      <span class="user-name"><%= currentUser.name %></span>
+    </div>
+    <form action="/logout" method="POST">
+      <button type="submit" class="sidebar-logout">Log out</button>
+    </form>
+  </div>
+</aside>

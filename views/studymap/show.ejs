@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main">
+    <%- include('../partials/flash') %>
+    <div class="breadcrumb"><a href="/dashboard">Books</a> / <a href="/books/<%= book.id %>"><%= book.title %></a> / <span>Study Map</span></div>
+    <div class="page-head"><div><h1>Study Map</h1><p class="page-sub">How the topics in <%= book.title %> relate to each other.</p></div></div>
+
+    <% if (topics.length === 0) { %>
+      <div class="empty-state">
+        <h3>No topics to map yet.</h3>
+        <p>Add topics to this Book to generate a study map.</p>
+        <a href="/books/<%= book.id %>" class="btn btn-primary">Back to Book</a>
+      </div>
+    <% } else { %>
+      <%
+        const cx = 400, cy = 320, radius = 220;
+        const nodes = topics.map((t, i) => {
+          const angle = (2 * Math.PI * i) / topics.length - Math.PI / 2;
+          return {
+            title: t.title,
+            id: t.id,
+            x: cx + radius * Math.cos(angle),
+            y: cy + radius * Math.sin(angle)
+          };
+        });
+      %>
+      <div class="studymap-wrap">
+        <svg viewBox="0 0 800 640" class="studymap-svg">
+          <% nodes.forEach(function(n) { %>
+            <line x1="<%= cx %>" y1="<%= cy %>" x2="<%= n.x %>" y2="<%= n.y %>" class="map-edge" />
+          <% }) %>
+          <circle cx="<%= cx %>" cy="<%= cy %>" r="66" class="map-center-circle" />
+          <foreignObject x="<%= cx - 60 %>" y="<%= cy - 30 %>" width="120" height="60">
+            <div class="map-center-label"><%= book.title %></div>
+          </foreignObject>
+          <% nodes.forEach(function(n) { %>
+            <a href="/topics/<%= n.id %>">
+              <circle cx="<%= n.x %>" cy="<%= n.y %>" r="46" class="map-node-circle" />
+              <foreignObject x="<%= n.x - 55 %>" y="<%= n.y - 26 %>" width="110" height="52">
+                <div class="map-node-label"><%= n.title %></div>
+              </foreignObject>
+            </a>
+          <% }) %>
+        </svg>
+      </div>
+      <p class="muted">Click any topic node to open it.</p>
+    <% } %>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main app-main-narrow">
+    <%- include('../partials/flash') %>
+    <div class="page-head">
+      <div>
+        <h1>New Book</h1>
+        <p class="page-sub">A Book is a folder for one subject — add Topics to it once it's created.</p>
+      </div>
+    </div>
+    <form action="/books" method="POST" class="card-form">
+      <label>Book title
+        <input type="text" name="title" placeholder="e.g. Artificial Intelligence" required autofocus />
+      </label>
+      <label>Description <span class="optional">(optional)</span>
+        <textarea name="description" rows="3" placeholder="What is this Book about?"></textarea>
+      </label>
+      <div class="form-actions">
+        <a href="/dashboard" class="btn btn-outline">Cancel</a>
+        <button type="submit" class="btn btn-primary">Create Book</button>
+      </div>
+    </form>
+  </main>
+</div>
+</body>
+</html>

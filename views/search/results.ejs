@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main">
+    <%- include('../partials/flash') %>
+    <div class="page-head"><div><h1>Search</h1><p class="page-sub"><% if (q) { %>Results for "<%= q %>"<% } else { %>Search your Books and Topics<% } %></p></div></div>
+
+    <% if (q && books.length === 0 && topics.length === 0) { %>
+      <div class="empty-state">
+        <h3>No results for "<%= q %>".</h3>
+        <p>Try a different keyword, or check the spelling.</p>
+      </div>
+    <% } %>
+
+    <% if (books.length) { %>
+      <div class="section-head"><h2>Books</h2></div>
+      <div class="book-grid">
+        <% books.forEach(function(b) { %>
+          <a href="/books/<%= b.id %>" class="book-folder">
+            <span class="folder-icon-lg">▤</span>
+            <div class="book-folder-title"><%= b.title %></div>
+            <div class="book-folder-meta">Created <%= b.created_year %></div>
+          </a>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <% if (topics.length) { %>
+      <div class="section-head"><h2>Topics</h2></div>
+      <div class="topic-list">
+        <% topics.forEach(function(t) { %>
+          <div class="topic-row">
+            <a href="/topics/<%= t.id %>" class="topic-row-title">
+              <span class="topic-dot"></span><%= t.title %> <span class="muted">· <%= t.book_title %></span>
+            </a>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </main>
+</div>
+</body>
+</html>

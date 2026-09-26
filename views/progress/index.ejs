@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main">
+    <%- include('../partials/flash') %>
+    <div class="page-head"><div><h1>Progress Dashboard</h1><p class="page-sub">Built from your actual activity — no placeholder numbers.</p></div></div>
+
+    <div class="stat-row">
+      <div class="stat-card"><span class="stat-value"><%= totalBooks %></span><span class="stat-label">Total Books</span></div>
+      <div class="stat-card"><span class="stat-value"><%= totalTopics %></span><span class="stat-label">Total Topics</span></div>
+      <div class="stat-card"><span class="stat-value"><%= quizzesCompleted %></span><span class="stat-label">Quizzes Completed</span></div>
+      <div class="stat-card"><span class="stat-value"><%= avgScore %>%</span><span class="stat-label">Average Score</span></div>
+      <div class="stat-card"><span class="stat-value"><%= pendingRevision %></span><span class="stat-label">Revision Pending</span></div>
+    </div>
+
+    <% if (!hasQuizData) { %>
+      <div class="empty-state">
+        <h3>No quiz data yet.</h3>
+        <p>Take your first quiz to see strong and weak topics here.</p>
+      </div>
+    <% } else { %>
+      <div class="progress-columns">
+        <div>
+          <div class="section-head"><h2>Strong Topics</h2></div>
+          <% if (!strongTopics.length) { %>
+            <p class="muted">No topics above 75% accuracy yet — keep practicing.</p>
+          <% } else { %>
+            <div class="bar-list">
+              <% strongTopics.forEach(function(t) { %>
+                <div class="bar-row">
+                  <span><%= t.topic_title %></span>
+                  <div class="bar-track"><span class="bar-fill bar-fill-strong" style="width:<%= t.accuracy.toFixed(0) %>%"></span></div>
+                  <span class="bar-value"><%= t.accuracy.toFixed(0) %>%</span>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+        </div>
+        <div>
+          <div class="section-head"><h2>Weak Topics</h2></div>
+          <% if (!weakTopics.length) { %>
+            <p class="muted">No weak topics detected — nice work.</p>
+          <% } else { %>
+            <div class="bar-list">
+              <% weakTopics.forEach(function(t) { %>
+                <div class="bar-row">
+                  <span><%= t.topic_title %></span>
+                  <div class="bar-track"><span class="bar-fill bar-fill-weak" style="width:<%= t.accuracy.toFixed(0) %>%"></span></div>
+                  <span class="bar-value"><%= t.accuracy.toFixed(0) %>%</span>
+                </div>
+              <% }) %>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="section-head"><h2>Recent Activity</h2></div>
+      <div class="history-list">
+        <% recentAttempts.forEach(function(a) { %>
+          <a href="/quiz/result/<%= a.id %>" class="history-row">
+            <div><strong><%= a.book_title %></strong> <span class="muted"><%= a.topic_title ? '· ' + a.topic_title : '· All Topics' %></span></div>
+            <span class="pill <%= a.percentage >= 75 ? 'pill-success' : (a.percentage >= 50 ? '' : 'pill-warn') %>"><%= a.percentage %>%</span>
+          </a>
+        <% }) %>
+      </div>
+    <% } %>
+  </main>
+</div>
+</body>
+</html>

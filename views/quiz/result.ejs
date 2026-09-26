@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main app-main-narrow">
+    <%- include('../partials/flash') %>
+
+    <div class="result-hero">
+      <span class="result-score"><%= attempt.percentage %>%</span>
+      <p class="result-summary"><%= attempt.score %> correct out of <%= attempt.total %></p>
+      <p class="result-feedback">
+        <% if (attempt.percentage >= 80) { %>Excellent work — this is a strong topic for you.
+        <% } else if (attempt.percentage >= 50) { %>Solid attempt. A little more revision will push this higher.
+        <% } else { %>This area needs focused revision — it's been added to your Revision Queue where relevant.
+        <% } %>
+      </p>
+    </div>
+
+    <div class="result-stats">
+      <div class="stat-card"><span class="stat-value"><%= attempt.score %></span><span class="stat-label">Correct</span></div>
+      <div class="stat-card"><span class="stat-value"><%= attempt.total - attempt.score %></span><span class="stat-label">Incorrect</span></div>
+      <div class="stat-card"><span class="stat-value"><%= attempt.percentage %>%</span><span class="stat-label">Score</span></div>
+    </div>
+
+    <% var weakKeys = Object.keys(weakByTopic); %>
+    <% if (weakKeys.length) { %>
+      <div class="section-head"><h2>Areas needing improvement</h2></div>
+      <div class="weak-topic-list">
+        <% weakKeys.forEach(function(k) { %>
+          <div class="weak-topic-row">
+            <span><%= k %></span>
+            <span class="pill pill-warn"><%= weakByTopic[k] %> missed</span>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <div class="section-head"><h2>Review answers</h2></div>
+    <div class="review-list">
+      <% answers.forEach(function(a, i) { %>
+        <div class="review-item <%= a.is_correct ? 'review-correct' : 'review-incorrect' %>">
+          <p class="review-q"><strong>Q<%= i + 1 %>.</strong> <%= a.question %></p>
+          <p class="review-a">Your answer: <%= a.selected_option || '—' %> · Correct answer: <%= a.correct_option %></p>
+        </div>
+      <% }) %>
+    </div>
+
+    <div class="form-actions">
+      <a href="/revision" class="btn btn-outline">View Revision Queue</a>
+      <a href="/dashboard" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+  </main>
+</div>
+</body>
+</html>

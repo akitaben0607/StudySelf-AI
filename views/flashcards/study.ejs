@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main app-main-narrow">
+    <%- include('../partials/flash') %>
+    <div class="breadcrumb"><a href="/dashboard">Books</a> / <a href="/books/<%= book.id %>"><%= book.title %></a> / <span>Flashcards</span></div>
+
+    <% if (cards.length === 0) { %>
+      <div class="empty-state">
+        <h3>No flashcards yet.</h3>
+        <p>Generate a set from this Book's content to start studying.</p>
+        <a href="/books/<%= book.id %>/flashcards" class="btn btn-primary">Generate Flashcards</a>
+      </div>
+    <% } else { %>
+      <div class="flashcard-stage" data-total="<%= cards.length %>">
+        <p class="flashcard-progress" id="fc-progress">Card 1 of <%= cards.length %></p>
+
+        <div class="flashcard" id="flashcard">
+          <div class="flashcard-inner" id="flashcard-inner">
+            <% cards.forEach(function(c, i) { %>
+              <div class="flashcard-face flashcard-front" data-index="<%= i %>" style="<%= i === 0 ? '' : 'display:none' %>">
+                <%= c.front %>
+              </div>
+            <% }) %>
+            <% cards.forEach(function(c, i) { %>
+              <div class="flashcard-face flashcard-back" data-index="<%= i %>" style="display:none">
+                <%= c.back %>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+        <p class="flashcard-hint">Click the card to flip it</p>
+
+        <div class="flashcard-controls">
+          <button type="button" class="btn btn-outline" id="fc-prev">Previous</button>
+          <button type="button" class="btn btn-outline" id="fc-flip">Flip</button>
+          <button type="button" class="btn btn-outline" id="fc-next">Next</button>
+        </div>
+
+        <div class="flashcard-rate">
+          <button type="button" class="btn btn-outline fc-rate-btn" data-difficulty="difficult">Difficult</button>
+          <button type="button" class="btn btn-primary fc-rate-btn" data-difficulty="easy">Easy</button>
+        </div>
+        <p class="rate-confirm" id="rate-confirm" style="display:none"></p>
+      </div>
+
+      <script>window.__FLASHCARD_IDS__ = <%- JSON.stringify(cards.map(c => c.id)) %>;</script>
+    <% } %>
+  </main>
+</div>
+<script src="/js/flashcards.js"></script>
+</body>
+</html>

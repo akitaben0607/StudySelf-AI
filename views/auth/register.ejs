@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="auth-body">
+  <div class="auth-shell">
+    <a href="/" class="auth-brand">
+      <span class="brand-mark">S</span><span class="brand-text">StudySelf <em>AI</em></span>
+    </a>
+    <div class="auth-card">
+      <h1>Create your workspace</h1>
+      <p class="auth-sub">Your Books, chats, quizzes, and progress stay private to your account.</p>
+      <%- include('../partials/flash') %>
+      <form action="/register" method="POST" class="auth-form" novalidate>
+        <label>Full name
+          <input type="text" name="name" value="<%= formData.name || '' %>" required autofocus />
+        </label>
+        <label>Email
+          <input type="email" name="email" value="<%= formData.email || '' %>" required />
+        </label>
+        <label>Password
+          <input type="password" name="password" required minlength="6" />
+        </label>
+        <label>Confirm password
+          <input type="password" name="confirmPassword" required minlength="6" />
+        </label>
+        <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+      </form>
+      <p class="auth-switch">Already have an account? <a href="/login">Log in</a></p>
+    </div>
+  </div>
+</body>
+</html>

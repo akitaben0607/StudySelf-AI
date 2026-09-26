@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><%- include('../partials/head') %></head>
+<body class="app-body">
+<div class="app-shell">
+  <%- include('../partials/sidebar') %>
+  <main class="app-main app-main-narrow">
+    <%- include('../partials/flash') %>
+    <div class="breadcrumb"><a href="/dashboard">Books</a> / <a href="/books/<%= book.id %>"><%= book.title %></a> / <span>Take Quiz</span></div>
+    <div class="page-head">
+      <div>
+        <h1>Quiz Setup</h1>
+        <p class="page-sub">
+          <% if (scope === 'topic') { %>Scope: <strong><%= topic.title %></strong><% } else { %>Scope: <strong>All Topics in <%= book.title %></strong><% } %>
+        </p>
+      </div>
+    </div>
+
+    <form action="/books/<%= book.id %>/quiz" method="POST" class="card-form" id="quiz-setup-form">
+      <input type="hidden" name="scope" value="<%= scope %>" />
+      <% if (scope === 'topic') { %><input type="hidden" name="topicId" value="<%= topic.id %>" /><% } %>
+
+      <label>Number of questions</label>
+      <div class="pill-select">
+        <% [10,20,30,40,50].forEach(function(n, i) { %>
+          <label class="pill-option">
+            <input type="radio" name="questionCount" value="<%= n %>" <%= i === 0 ? 'checked' : '' %> />
+            <span><%= n %></span>
+          </label>
+        <% }) %>
+      </div>
+
+      <div class="form-actions">
+        <a href="/books/<%= book.id %>/quiz" class="btn btn-outline">Back</a>
+        <button type="submit" class="btn btn-primary" id="generate-btn">Generate Quiz</button>
+      </div>
+    </form>
+  </main>
+</div>
+<script src="/js/app.js"></script>
+<script>
+  document.getElementById('quiz-setup-form').addEventListener('submit', function () {
+    var btn = document.getElementById('generate-btn');
+    btn.disabled = true;
+    btn.textContent = 'Generating…';
+  });
+</script>
+</body>
+</html>
